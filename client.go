@@ -16,8 +16,7 @@ type Client interface {
 	AccountSid() string
 	AuthToken() string
 	RootUrl() string
-	post(url.Values, string) ([]byte, error)
-	postGae(appengine.Context, url.Values, string) ([]byte, error)
+	post(appengine.Context, url.Values, string) ([]byte, error)
 }
 
 type TwilioClient struct {

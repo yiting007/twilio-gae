@@ -45,27 +45,14 @@ func NewMessage(c appengine.Context, client Client, from string, to string, cont
 		params.Set(param, value)
 	}
 
-	if c == nil {
-		res, err := client.post(params, client.RootUrl()+"/Messages.json")
+	res, err := client.post(c, params, client.RootUrl()+"/Messages.json")
 
-		if err != nil {
-			return message, err
-		}
-
-		message = new(Message)
-		err = json.Unmarshal(res, message)
-
-		return message, err
-	} else {
-		res, err := client.postGae(c, params, client.RootUrl()+"/Messages.json")
-
-		if err != nil {
-			return message, err
-		}
-
-		message = new(Message)
-		err = json.Unmarshal(res, message)
-
+	if err != nil {
 		return message, err
 	}
+
+	message = new(Message)
+	err = json.Unmarshal(res, message)
+
+	return message, err
 }
